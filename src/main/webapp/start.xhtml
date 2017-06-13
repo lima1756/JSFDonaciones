@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>PrimeFaces</title>
+            </f:facet>
+        </h:head>
+        <h:body>
+            <p:dialog header="Detalles de su donación" widgetVar="nueva" modal="true" >
+                <h:form>
+                    <h:panelGrid columns="1" cellpadding="5">
+                        <p:outputLabel value="Nombre del objeto: " />
+                        <p:inputText placeholder="Nombre del objeto" value="#{objetosBean.obj.nombre}"></p:inputText>
+                        <p:outputLabel for="tipo" value="Tipo " />
+                        <p:selectOneMenu id="tipo" value="#{objetosBean.obj.tipo}" effect="fold" editable="true">
+                            <f:selectItem itemLabel="Select One" itemValue="#{null}" />
+                            <f:selectItems value="#{objetosBean.tipos}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Descripción: " />
+                        <p:inputText placeholder="Descripcion:" value="#{objetosBean.obj.descripcion}"></p:inputText>
+                        <p:commandButton value="Donar :D" ajax="false" actionListener="#{objetosBean.saveObj()}"></p:commandButton>
+                    </h:panelGrid>
+                </h:form>
+            </p:dialog>  
+            
+            <p:dialog header="Mis donaciones" widgetVar="misDonaciones" modal="true" >
+                 <p:dataTable var="q" value="#{objetosBean.misDonaciones}" rows="10"
+                            paginator="true"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            rowsPerPageTemplate="5,10,15"> 
+                    <p:column headerText="Nombre"> 
+                        <h:outputText value="#{q.nombre}" /> 
+                    </p:column> 
+                    <p:column headerText="Tipo" filterBy="#{q.tipo}"> 
+                        <h:outputText value="#{q.tipo}" />
+                    </p:column> 
+                    <p:column headerText="Descripcion"> 
+                        <h:outputText value="#{q.descripcion}" />
+                    </p:column> 
+                </p:dataTable>
+            </p:dialog> 
+            
+            <p:dialog header="Mis objetos" widgetVar="misObjetos" modal="true" >
+                <p:dataTable var="q" value="#{objetosBean.misObjetos}" rows="10"
+                            paginator="true"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            rowsPerPageTemplate="5,10,15"> 
+                    <p:column headerText="Nombre"> 
+                        <h:outputText value="#{q.nombre}" /> 
+                    </p:column> 
+                    <p:column headerText="Tipo" filterBy="#{q.tipo}"> 
+                        <h:outputText value="#{q.tipo}" />
+                    </p:column> 
+                    <p:column headerText="Descripcion"> 
+                        <h:outputText value="#{q.descripcion}" />
+                    </p:column> 
+                </p:dataTable>
+            </p:dialog> 
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <h:form id="formulario">
+                        <p:menubar>
+                            <p:menuitem value="Donar un objeto" url="#"  onclick="PF('nueva').show();" icon="ui-icon-pencil"/>
+                            <p:menuitem value="Mis donaciones" url="#"  onclick="PF('misDonaciones').show();" icon="ui-icon-pencil"/>
+                            <p:menuitem value="Mis objetos conseguidos" url="#"  onclick="PF('misObjetos').show();" icon="ui-icon-pencil"/>
+                            <p:menuitem value="Cerrar sesión" actionListener="#{LoginBean.logout()}" ajax="false"  icon="ui-icon-home"/>
+                        </p:menubar>    
+                    </h:form>
+
+
+                </div>
+
+                <div class="ui-g-12 ui-md-12 ui-g-nopad">
+                    <!-- TODO EL CONTENIDO -->
+                    <div class="ui-g-12 ui-g-nopad">
+                        <div class="ui-g">
+                            <div class="ui-g-12 ui-md-12">
+                                <h1>
+                                    <h:outputText id="Titulo" value="Seleccione lo que quiera :D"/>                                    
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="ui-g">
+                            <h:form id="botones">
+                                <p:dataTable var="q" value="#{objetosBean.lista}" rows="10"
+                                            paginator="true"
+                                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                            rowsPerPageTemplate="5,10,15"> 
+                                    <p:column headerText="Nombre"> 
+                                        <h:outputText value="#{q.nombre}" /> 
+                                    </p:column> 
+                                    <p:column headerText="Tipo" filterBy="#{q.tipo}"> 
+                                        <h:outputText value="#{q.tipo}" />
+                                    </p:column> 
+                                    <p:column headerText="Descripcion"> 
+                                        <h:outputText value="#{q.descripcion}" />
+                                    </p:column> 
+                                    <p:column headerText="Obtener"> 
+                                        <p:commandLink actionListener="#{objetosBean.mine(q.idobjeto)}" >
+                                            <h:outputText value="MIO" />
+                                        </p:commandLink>
+                                    </p:column> 
+                                </p:dataTable>
+                            </h:form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>  
+                
+                
+
+
+            
+        </h:body>
+
+    </f:view>
+</html>

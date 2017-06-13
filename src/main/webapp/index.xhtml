@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>PrimeFaces</title>
+            </f:facet>
+        </h:head>
+        
+        <h:body>
+            <p:dialog header="Iniciar sesion" widgetVar="login" modal="true" id='loginModal'>
+                <h:outputText value="#{param['error']!=null?'Porfavor vuelva a intentarlo':null}" />
+                <h:form id="login" >
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <p:outputLabel>Usuario: </p:outputLabel>
+                        <p:inputText value="#{LoginBean.username}" />
+                        <p:outputLabel>Contraseña: </p:outputLabel>
+                        <p:password value="#{LoginBean.password}" />
+                        <p:commandButton value="Iniciar Sesión" actionListener="#{LoginBean.login()}" ajax="true" ></p:commandButton>
+                    </h:panelGrid>
+                </h:form>
+
+            </p:dialog>  
+            
+            
+            <p:dialog header="Registrarse" widgetVar="signup" modal="true" >
+                <h:form id="signUp">
+                    <p:messages id="signUpMessagge" showDetail="true" autoUpdate="true" closable="true" />
+                    <h:panelGrid columns="2" cellpadding="5">
+                        
+                            <p:outputLabel>Nombre:</p:outputLabel>
+                            <p:inputText value="#{RegistroBean.nombre}" />
+                            <p:outputLabel>Usuario: </p:outputLabel>
+                            <p:inputText value="#{RegistroBean.userName}" />
+                            <p:outputLabel>Contraseña:</p:outputLabel>
+                            <p:password value="#{RegistroBean.password}" />
+                            <p:outputLabel>Confirmar contraseña:</p:outputLabel>
+                            <p:password value="#{RegistroBean.confirmPassword}" />
+                            <p:commandButton value="Registro" actionListener="#{RegistroBean.registro}" ajax="true"></p:commandButton>           
+                            
+                    </h:panelGrid>
+                </h:form>
+            </p:dialog>
+            
+
+
+
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-4"></div>
+                <div class="ui-g-12 ui-md-4">
+                    <h1>Sistema de donaciones :)</h1>
+                </div>
+                <div class="ui-g-12 ui-md-4"></div>
+                <div class="ui-g-12 ui-md-4"></div>
+                <div class="ui-g-12 ui-md-4">
+                    <p:commandButton value="Iniciar sesion" onclick="PF('login').show();" ajax="true" styleClass="ui-priority-primary" style="width: 100%"/>
+                </div>
+                <div class="ui-g-12 ui-md-4"></div>
+                <div class="ui-g-12 ui-md-4"></div>
+                <div class="ui-g-12 ui-md-4">
+                    <p:commandButton value="Registrarse" onclick="PF('signup').show();" ajax="true" styleClass="ui-priority-primary" style="width: 100%"/>
+                </div>
+                <div class="ui-g-12 ui-md-4"></div>
+            </div>  
+        </h:body>
+
+    </f:view>
+</html>
